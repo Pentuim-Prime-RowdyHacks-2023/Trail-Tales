@@ -1,4 +1,5 @@
 *.pem
+log.txt
 .history
 .vscode
 
