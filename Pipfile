@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
 python-dotenv = "*"
 pandas = "*"
-flask_restful = "*"
-flask_sqlalchemy = "*"
+quart-openapi = "*"
+quart-schema = "*"
+quart = "*"
 
 [dev-packages]
 
