@@ -5,9 +5,10 @@ name = "pypi"
 
 [packages]
 flask = "*"
-sqlalchemy = "*"
 python-dotenv = "*"
 pandas = "*"
+flask_restful = "*"
+flask_sqlalchemy = "*"
 
 [dev-packages]
 
