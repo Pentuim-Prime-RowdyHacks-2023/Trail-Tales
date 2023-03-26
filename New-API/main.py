@@ -26,13 +26,13 @@ class Bio(Resource):
     @app.expect(app.create_validator('Bio POST', TableSkels['Bio'] ))
     async def post(self, uid) -> jsonify.Response:
         data = request.get_json()
-        await ndbh.post_data(data, 'Bio')
+        await ndbh.post_data(data.__dict__, 'Bio')
         return data, 200
     
     @app.expect(app.create_validator('Bio PUT', TableSkels['Bio'] ))
     async def put(self, uid) -> jsonify.Response:
         data = request.get_json()
-        await ndbh.update_data(data, 'Bio')
+        await ndbh.update_data(uid, data, 'Bio')
         return data, 200
 
 

@@ -9,6 +9,8 @@ pandas = "*"
 quart-openapi = "*"
 quart-schema = "*"
 quart = "*"
+azure-storage-file-share = "*"
+quart-db = "*"
 
 [dev-packages]
 
