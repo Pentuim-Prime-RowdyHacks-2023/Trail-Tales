@@ -27,13 +27,13 @@ class Bio(Resource):
     async def post(self, uid) -> jsonify.Response:
         data = request.get_json()
         await ndbh.post_data(data.__dict__, 'Bio')
-        return data, 200
+        return data.__dict__, 200
     
     @app.expect(app.create_validator('Bio PUT', TableSkels['Bio'] ))
     async def put(self, uid) -> jsonify.Response:
         data = request.get_json()
-        await ndbh.update_data(uid, data, 'Bio')
-        return data, 200
+        await ndbh.update_data(uid, data.__dict__, 'Bio')
+        return data.__dict__, 200
 
 
 @app.route('Tales/<str:uid>')
@@ -42,7 +42,7 @@ class Tales(Resource):
     async def get(self, uid) -> jsonify.Response:
         TaleId = (await request.form)['TaleId']
         if TaleId is not None:
-            data = await ndbh.fetch_data(uid, 'Takes', TaleId)
+            data = await ndbh.fetch_data(uid, 'Tales', TaleId)
         else:
             data = await ndbh.fetch_data(uid, 'Tales')
         return jsonify(data)
@@ -50,14 +50,14 @@ class Tales(Resource):
     @app.expect(app.create_validator('Tales POST', TableSkels['Tales'] ))
     async def post(self, uid) -> jsonify.Response:
         data = request.get_json()
-        await ndbh.post_data(data, 'Tales')
-        return data, 200
+        await ndbh.post_data(data.__dict__, 'Tales')
+        return data.__dict__, 200
     
     @app.expect(app.create_validator('Tales PUT', TableSkels['Tales'] ))
     async def put(self, uid) -> jsonify.Response:
         data = request.get_json()
-        await ndbh.update_data(data, 'Tales')
-        return data, 200
+        await ndbh.update_data(uid, data.__dict__, 'Tales')
+        return data.__dict__, 200
 
 if __name__ == "__main__":
     app.run(debug=True)

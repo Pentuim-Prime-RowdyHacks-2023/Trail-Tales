@@ -12,18 +12,22 @@ HOST = getenv('HOST')
 DATABASE = getenv('DATABASE')
 
 app = Quart(__name__)
-db = QuartDB(app, url="mysql+pymysql://{ USER }:{ PASSWORD }@{ HOST }/{ DATABASE }")
+db = QuartDB(app, url=f"mysql+pymysql://{ USER }:{ PASSWORD }@{ HOST }/{ DATABASE }")
 
 # gotta make a function for fetch_data()
-async def fetch_data(uid: str, table_name: str = '') -> str:
+async def fetch_data(uid: str, table_name: str = '', tale_id: str = '') -> str:
     if table_name is None:
         # Return the entire row for the given uid
         query = 'SELECT * FROM Bio LEFT JOIN Tales ON Tales.UID = Bio.UID'
         result = await g.connection.query(query)
     else:
-        # Return the data from the specified table for the given uid
-        query = f'SELECT * FROM {table_name} WHERE UID = {uid}'
-        result = await g.connection.query(query, uid)
+        if tale_id is None:
+            # Return the data from the specified table for the given uid
+            query = f'SELECT * FROM {table_name} WHERE UID = {uid}'
+            result = await g.connection.query(query)
+        else:
+            query = f'SELECT * FROM Tales WHERE UID = {uid} AND TaleID = {tale_id}'
+            result = await g.connection.query(query)
 
     return result
 
