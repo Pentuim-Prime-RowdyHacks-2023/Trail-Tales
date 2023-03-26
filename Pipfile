@@ -6,11 +6,13 @@ name = "pypi"
 [packages]
 python-dotenv = "*"
 pandas = "*"
-quart-openapi = "*"
+quart-openapi = "1.7.2"
 quart-schema = "*"
-quart = "*"
+quart = "0.17.0"
 azure-storage-file-share = "*"
 quart-db = "*"
+werkzeug = "==2.1.2"
+swagger-ui-py = "22.7.13"
 
 [dev-packages]
 

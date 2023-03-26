@@ -1,7 +1,7 @@
 {
     "Bio": {
         
-        "uid": { "type": "string" },
+        "UID": { "type": "string" },
         "FirstName": { "type": "string" },
         "LastName": { "type": "string" },
         "Email": { "type": "string" }
@@ -10,8 +10,7 @@
 
     "Tales": {
 
-        "uid": { "type": "string" },
-        "TaleId": { "type": "string" },
+        "UID": { "type": "string" },
         "AudioURL": { "type": "string" },
         "Transcript": { "type": "string" },
         "Summary": { "type": "string" }

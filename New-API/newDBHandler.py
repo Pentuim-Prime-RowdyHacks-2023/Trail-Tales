@@ -19,15 +19,15 @@ async def fetch_data(uid: str, table_name: str = '', tale_id: str = '') -> str:
     if table_name is None:
         # Return the entire row for the given uid
         query = 'SELECT * FROM Bio LEFT JOIN Tales ON Tales.UID = Bio.UID'
-        result = await g.connection.query(query)
+        result = await g.connection.fetch_val(query)
     else:
         if tale_id is None:
             # Return the data from the specified table for the given uid
             query = f'SELECT * FROM {table_name} WHERE UID = {uid}'
-            result = await g.connection.query(query)
+            result = await g.connection.fetch_val(query)
         else:
             query = f'SELECT * FROM Tales WHERE UID = {uid} AND TaleID = {tale_id}'
-            result = await g.connection.query(query)
+            result = await g.connection.fetch_val(query)
 
     return result
 
