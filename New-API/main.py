@@ -4,7 +4,7 @@ from quart_openapi import Pint, Resource
 
 import newDBHandler as ndbh
 
-app = Pint(__name__, title='TrailTales', no_openapi=True)
+app = Pint(__name__, title='TrailTales')
 
 with open(r'./New-API/dbSkel.json' , 'r') as f:
     TableSkels = json.load(f)
@@ -12,9 +12,7 @@ with open(r'./New-API/dbSkel.json' , 'r') as f:
 @app.route('/')
 class Root(Resource):
 
-    expect = app.create_validator('Full POST', TableSkels) 
-
-    @app.expect(expect)
+    @app.expect(app.create_validator('Full POST', TableSkels))
     async def post(self) -> Response:
         data = await request.get_json()
         await ndbh.post_data(data['Bio'], 'Bio')
