@@ -19,17 +19,12 @@ async def fetch_data(uid: str, table_name: str = '', tale_id: str = '') -> str:
     if table_name is None:
         # Return the entire row for the given uid
         query = 'SELECT * FROM Bio LEFT JOIN Tales ON Tales.UID = Bio.UID'
-        result = await g.connection.fetch_val(query)
+    elif tale_id is None:
+        # Return the data from the specified table for the given uid
+        query = f'SELECT * FROM {table_name} WHERE UID = {uid}'
     else:
-        if tale_id is None:
-            # Return the data from the specified table for the given uid
-            query = f'SELECT * FROM {table_name} WHERE UID = {uid}'
-            result = await g.connection.fetch_val(query)
-        else:
-            query = f'SELECT * FROM Tales WHERE UID = {uid} AND TaleID = {tale_id}'
-            result = await g.connection.fetch_val(query)
-
-    return result
+        query = f'SELECT * FROM Tales WHERE UID = {uid} AND TaleID = {tale_id}'
+    return await g.connection.fetch_val(query)
 
 # POST Data
 async def post_data(data: dict, table_name: str) -> str:
@@ -39,10 +34,7 @@ async def post_data(data: dict, table_name: str) -> str:
     placeholders = ', '.join(f"${i+1}" for i in range(len(data)))
     # Construct the SQL query
     query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
-    # Execute the query with the data values as parameters
-    result = await g.connection.execute(query, *data.values())
-
-    return result
+    return await g.connection.execute(query, *data.values())
 
 async def update_data(uid: str, data: dict, table_name: str) -> str:
      # Get the column names from the data keys
@@ -50,5 +42,4 @@ async def update_data(uid: str, data: dict, table_name: str) -> str:
     # Get the parameter placeholders for the data values
     set_statement = ', '.join(f"{columns[i]} = {data[columns[i]]}" for i in range(len(data)))
     query = f'UPDATE {table_name} SET ({set_statement}) WHERE UID = {uid}'
-    result = await g.connection.execute(query)
-    return result
+    return await g.connection.execute(query)
